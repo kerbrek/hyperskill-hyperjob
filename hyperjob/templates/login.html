@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Login to HyperJob</title>
+  </head>
+
+  <body>
+    <h2>Login to HyperJob</h2>
+    <form method="post" action="/login">{% csrf_token %}
+      <table>{{ form.as_table }}</table>
+      <button type="submit">Login</button>
+    </form>
+  </body>
+
+</html>
