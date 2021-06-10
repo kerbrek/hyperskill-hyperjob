@@ -1,0 +1,29 @@
+---
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: hyperjob-web-dev
+    command: python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --noreload
+    volumes:
+      - .:/app
+    env_file:
+      - ./ENV/.env.dev
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./ENV/.env.dev
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

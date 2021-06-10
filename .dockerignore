@@ -1,0 +1,11 @@
+*
+!hyperjob/
+!resume/
+!vacancy/
+!entrypoint.sh
+!manage.py
+!Pipfile
+!Pipfile.lock
+!requirements.txt
+!wait-for-it.sh
+**/__pycache__/

@@ -13,4 +13,22 @@ check-deploy:
 run:
 	pipenv run python manage.py runserver
 
-.PHONY: install shell check check-deploy run
+up:
+	docker-compose up --build
+
+down:
+	docker-compose down
+
+up-dev:
+	docker-compose -f docker-compose.dev.yml up --build
+
+down-dev:
+	docker-compose -f docker-compose.dev.yml down
+
+up-debug:
+	docker-compose -f docker-compose.debug.yml up --build
+
+down-debug:
+	docker-compose -f docker-compose.debug.yml down
+
+.PHONY: install shell check check-deploy run up down up-dev down-dev up-debug down-debug
