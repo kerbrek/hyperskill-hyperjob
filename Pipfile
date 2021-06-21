@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 django = "==2.2.*"
+psycopg2-binary = "*"
+whitenoise = "*"
 
 [dev-packages]
 pylint = "*"
