@@ -25,4 +25,7 @@ createsuperuser:
 django-shell:
 	pipenv run python manage.py shell
 
-.PHONY: install shell check check-deploy run makemigrations migrate createsuperuser django-shell
+requirements:
+	pipenv lock -r > requirements.txt
+
+.PHONY: install shell check check-deploy run makemigrations migrate createsuperuser django-shell requirements
