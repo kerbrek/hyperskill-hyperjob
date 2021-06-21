@@ -13,4 +13,16 @@ check-deploy:
 run:
 	pipenv run python manage.py runserver
 
-.PHONY: install shell check check-deploy run
+makemigrations:
+	pipenv run python manage.py makemigrations
+
+migrate:
+	pipenv run python manage.py migrate
+
+createsuperuser:
+	pipenv run python manage.py createsuperuser
+
+django-shell:
+	pipenv run python manage.py shell
+
+.PHONY: install shell check check-deploy run makemigrations migrate createsuperuser django-shell
