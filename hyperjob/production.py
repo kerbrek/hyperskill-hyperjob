@@ -13,9 +13,10 @@ DEBUG = int(os.environ.get('DEBUG', default=0))
 # that Azure automatically creates for us.
 ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']]
 
-# Configure custom domain name if available
-if 'CUSTOM_DOMAIN' in os.environ:
-    ALLOWED_HOSTS = [*ALLOWED_HOSTS, os.environ['CUSTOM_DOMAIN']]
+# Configure custom domain names if available
+if 'CUSTOM_DOMAINS' in os.environ:
+    domains = os.environ['CUSTOM_DOMAINS'].split(',')
+    ALLOWED_HOSTS = [*ALLOWED_HOSTS, *domains]
 
 
 # WhiteNoise configuration
