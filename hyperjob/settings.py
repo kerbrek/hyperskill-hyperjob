@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+SECRET_KEY = '*57#^8!%%x4wi6byh%qj3!&7b)qu5ve7m5tz9&)2^jievj2j1b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = True
 
-ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(' ')
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -77,22 +77,11 @@ WSGI_APPLICATION = 'hyperjob.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-sqlite_settings = {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': os.environ.get('HYPERSKILL_TEST_DATABASE') or os.path.join(BASE_DIR, 'db.sqlite3'),
-}
-
-postgresql_settings = {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': os.environ['POSTGRES_DB'],
-    'USER': os.environ['POSTGRES_USER'],
-    'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-    'HOST': os.environ['POSTGRES_HOST'],
-    'PORT': os.environ['POSTGRES_PORT'],
-}
-
 DATABASES = {
-    'default': sqlite_settings if int(os.environ.get('SQLITE_DB_ENGINE', default=0)) else postgresql_settings
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.environ.get('HYPERSKILL_TEST_DATABASE') or os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 # Password validation

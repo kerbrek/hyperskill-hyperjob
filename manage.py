@@ -5,7 +5,11 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hyperjob.settings')
+    # If DJANGO_ALLOWED_HOSTS is defined as an environment variable,
+    # then we should use the production settings.
+    settings_module = "hyperjob.production" if 'DJANGO_ALLOWED_HOSTS' in os.environ else 'hyperjob.settings'
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
