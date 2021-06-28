@@ -1,6 +1,6 @@
 import os
 
-from .settings import *
+from .settings import *  # pylint: disable=wildcard-import, unused-wildcard-import
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
