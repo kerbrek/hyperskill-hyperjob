@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
     env_file:
-      - ./ENV/.env.dev
+      - ./.env.example
     ports:
       - "8000:8000"
       - "5678:5678"
@@ -21,7 +21,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - ./ENV/.env.dev
+      - ./.env.example
     ports:
       - "5432:5432"
 
