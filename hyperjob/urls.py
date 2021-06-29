@@ -20,11 +20,7 @@ from django.views.generic import RedirectView
 
 from . import views
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
-
 urlpatterns = [
-    path('sentry-debug/', trigger_error),
     path('admin/', admin.site.urls),
     path('', views.MainView.as_view()),
     path('signup/', RedirectView.as_view(url='/signup')),
