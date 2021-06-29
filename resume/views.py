@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -21,7 +22,7 @@ class NewResumeView(View):
 
         form = NewResumeForm(request.POST)
         if not form.is_valid():
-            return redirect('/home')
+            return HttpResponseBadRequest('<h1>400 Bad Request</h1>')
 
         author = request.user
         description = form.cleaned_data['description']
