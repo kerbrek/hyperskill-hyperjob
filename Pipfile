@@ -12,6 +12,7 @@ sentry-sdk = "*"
 [dev-packages]
 pylint = "*"
 pylint-django = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.6"
