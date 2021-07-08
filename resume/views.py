@@ -18,7 +18,6 @@ def get_client_ip(request):
     return request.META.get('REMOTE_ADDR')
 
 
-# Create your views here.
 class ResumeListView(View):
     def get(self, request, *args, **kwargs):
         context = {'resumes': Resume.objects.all()}
