@@ -8,6 +8,10 @@ install:
 shell:
 	pipenv shell
 
+.PHONY: test
+test:
+	pipenv run pytest
+
 .PHONY: check
 check:
 	pipenv run python manage.py check
