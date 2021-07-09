@@ -12,6 +12,10 @@ shell:
 test:
 	pipenv run pytest
 
+.PHONY: lint
+lint:
+	pipenv run pylint -d duplicate-code hyperjob/ resume/ vacancy/
+
 .PHONY: check
 check:
 	pipenv run python manage.py check
