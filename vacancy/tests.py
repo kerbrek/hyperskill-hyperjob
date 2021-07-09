@@ -1,4 +1,4 @@
-# pylint: disable=redefined-outer-name, unused-argument
+# pylint: disable=redefined-outer-name, unused-argument, no-self-use
 import logging
 
 import pytest
