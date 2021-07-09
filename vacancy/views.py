@@ -7,7 +7,6 @@ from .forms import NewVacancyForm
 from .models import Vacancy
 
 
-# Create your views here.
 class VacancyListView(View):
     def get(self, request, *args, **kwargs):
         context = {'vacancies': Vacancy.objects.all()}

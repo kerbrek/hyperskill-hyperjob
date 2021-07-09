@@ -7,7 +7,6 @@ from .forms import NewResumeForm
 from .models import Resume
 
 
-# Create your views here.
 class ResumeListView(View):
     def get(self, request, *args, **kwargs):
         context = {'resumes': Resume.objects.all()}
