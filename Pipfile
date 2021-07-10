@@ -6,13 +6,12 @@ name = "pypi"
 [packages]
 django = "==2.2.*"
 psycopg2-binary = "==2.8.*"
-whitenoise = "*"
 sentry-sdk = "*"
+whitenoise = "*"
 
 [dev-packages]
-pylint = "*"
-pylint-django = "*"
 autopep8 = "*"
+pylint-django = "*"
 pytest-django = "*"
 
 [requires]
