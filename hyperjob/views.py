@@ -8,7 +8,6 @@ from resume.forms import NewResumeForm
 from vacancy.forms import NewVacancyForm
 
 
-# Create your views here.
 class MainView(View):
     def get(self, request, *args, **kwargs):
         context = {
