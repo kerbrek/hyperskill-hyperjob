@@ -12,6 +12,7 @@ psycopg2-binary = "==2.8.*"
 pylint = "*"
 pylint-django = "*"
 autopep8 = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.6"
