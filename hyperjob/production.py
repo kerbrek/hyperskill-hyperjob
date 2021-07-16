@@ -72,3 +72,15 @@ if 'SENTRY_DSN' in os.environ:
         send_default_pii=int(os.environ.get(
             'SENTRY_SEND_DEFAULT_PII', default=1))
     )
+
+
+# Security settings
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+X_FRAME_OPTIONS = 'DENY'
