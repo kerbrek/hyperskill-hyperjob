@@ -9,13 +9,13 @@ Implementation of the [HyperJob Agency project](https://hyperskill.org/projects/
 
 ## Commands
 
-* Setup a virtual environment using _Pipenv_
+* Setup a working environment using _Pipenv_
 
-    `make install`
+    `make setup`
 
 * Start a development Web server
 
-    `make run`
+    `make start`
 
 * Run tests
 
