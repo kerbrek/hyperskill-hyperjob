@@ -1,8 +1,9 @@
 .DEFAULT_GOAL := help
 
-.PHONY: install # Setup a virtual environment using Pipenv
-install:
+.PHONY: setup # Setup a working environment
+setup:
 	env PIPENV_VENV_IN_PROJECT=1 pipenv install --dev
+	pipenv run python manage.py migrate
 
 .PHONY: shell # Spawn a shell within the virtual environment
 shell:
@@ -20,8 +21,8 @@ lint:
 check:
 	pipenv run python manage.py check
 
-.PHONY: run # Start a development Web server
-run:
+.PHONY: start # Start a development Web server
+start:
 	pipenv run python manage.py runserver
 
 .PHONY: makemigrations # Generate Django migrations
