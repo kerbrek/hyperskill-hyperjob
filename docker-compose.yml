@@ -20,12 +20,12 @@ services:
       - ./ENV/.env.db
 
   nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    image: hyperjob-nginx
+    image: nginx
     volumes:
+      - ./nginx/templates:/etc/nginx/templates:ro
       - static_files:/app/static/:ro
+    env_file:
+      - ./ENV/.env.nginx
     ports:
       - "8000:80"
     depends_on:
