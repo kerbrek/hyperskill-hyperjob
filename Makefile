@@ -37,13 +37,20 @@ migrate:
 createsuperuser:
 	pipenv run python manage.py createsuperuser
 
-.PHONY: django-shell # Start the Python interactive interpreter
+.PHONY: django-shell # Start Python interactive interpreter
 django-shell:
 	pipenv run python manage.py shell
 
+.PHONY: db # Start Postgres container
+db:
+	@echo Starting db container...
+	docker run -d --rm --name shortener_temp_db -p 5432:5432 --env-file ./.env.example postgres:13
+	@bash -c "trap 'echo && echo Stopping db container... && docker stop shortener_temp_db' EXIT; \
+	echo Press CTRL+C to stop && sleep 1d"
+
 .PHONY: requirements # Generate requirements.txt file
 requirements:
-	pipenv lock -r > requirements.txt
+	pipenv lock --requirements > requirements.txt
 
 .PHONY: up # Start Compose services
 up:
@@ -69,12 +76,12 @@ up-debug:
 down-debug:
 	docker-compose -f docker-compose.debug.yml down
 
-# https://stackoverflow.com/a/26339924/6475258
-.PHONY: list # Generate list of targets
-list:
-	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
-
-# https://stackoverflow.com/a/45843594/6475258
-.PHONY: help # Generate list of targets with descriptions
+## https://stackoverflow.com/a/45843594/6475258
+.PHONY: help # Print list of targets with descriptions
 help:
 	@grep '^.PHONY: .* #' $(lastword $(MAKEFILE_LIST)) | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20
+
+## https://stackoverflow.com/a/26339924/6475258
+# .PHONY: list # Print list of targets
+# list:
+# 	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
