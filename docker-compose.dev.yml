@@ -5,10 +5,13 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     image: hyperjob-web-dev
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - .:/app:ro
     env_file:
       - ./.env.example
+    environment:
+      - DEBUG=1
     ports:
       - "8000:8000"
     depends_on:

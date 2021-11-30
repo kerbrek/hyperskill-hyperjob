@@ -8,7 +8,8 @@ services:
     volumes:
       - static_files:/app/static
     env_file:
-      - ./ENV/.env.app
+      # - ./ENV/.env.app
+      - ./.env.example
     depends_on:
       - db
 
@@ -17,7 +18,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - ./ENV/.env.db
+      # - ./ENV/.env.db
+      - ./.env.example
 
   nginx:
     image: nginx
@@ -25,7 +27,8 @@ services:
       - ./nginx/templates:/etc/nginx/templates:ro
       - static_files:/app/static/:ro
     env_file:
-      - ./ENV/.env.nginx
+      # - ./ENV/.env.nginx
+      - ./.env.example
     ports:
       - "8000:80"
     depends_on:

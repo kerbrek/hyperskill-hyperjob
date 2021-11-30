@@ -24,5 +24,3 @@ RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /
 USER appuser
 
 ENTRYPOINT ["/app/entrypoint.dev.sh"]
-
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

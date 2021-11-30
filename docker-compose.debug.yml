@@ -7,9 +7,11 @@ services:
     image: hyperjob-web-dev
     command: python /tmp/debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --noreload
     volumes:
-      - .:/app
+      - .:/app:ro
     env_file:
       - ./.env.example
+    environment:
+      - DEBUG=1
     ports:
       - "8000:8000"
       - "5678:5678"
