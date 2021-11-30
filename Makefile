@@ -37,20 +37,20 @@ migrate:
 createsuperuser:
 	pipenv run python manage.py createsuperuser
 
-.PHONY: django-shell # Start the Python interactive interpreter
+.PHONY: django-shell # Start Python interactive interpreter
 django-shell:
 	pipenv run python manage.py shell
 
 .PHONY: requirements # Generate requirements.txt file
 requirements:
-	pipenv lock -r > requirements.txt
+	pipenv lock --requirements > requirements.txt
 
-# https://stackoverflow.com/a/26339924/6475258
-.PHONY: list # Generate list of targets
-list:
-	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
-
-# https://stackoverflow.com/a/45843594/6475258
-.PHONY: help # Generate list of targets with descriptions
+## https://stackoverflow.com/a/45843594/6475258
+.PHONY: help # Print list of targets with descriptions
 help:
 	@grep '^.PHONY: .* #' $(lastword $(MAKEFILE_LIST)) | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20
+
+## https://stackoverflow.com/a/26339924/6475258
+# .PHONY: list # Print list of targets
+# list:
+# 	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
