@@ -3,6 +3,7 @@
 !resume/
 !vacancy/
 !entrypoint.sh
+!gunicorn.conf.py
 !manage.py
 !Pipfile
 !Pipfile.lock

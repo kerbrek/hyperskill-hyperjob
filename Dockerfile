@@ -27,4 +27,4 @@ USER appuser
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "hyperjob.wsgi"]
+CMD ["gunicorn", "--config", "./gunicorn.conf.py", "hyperjob.wsgi"]
