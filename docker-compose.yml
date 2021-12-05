@@ -24,7 +24,7 @@ services:
   nginx:
     image: nginx:1-alpine
     volumes:
-      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./etc/nginx/templates:/etc/nginx/templates:ro
       - static_files:/app/static/:ro
     env_file:
       # - ./ENV/.env.nginx
