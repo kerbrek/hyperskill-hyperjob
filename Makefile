@@ -48,7 +48,7 @@ requirements:
 .PHONY: db # Start Postgres container
 db:
 	@echo Starting db container...
-	docker run -d --rm --name hyperjob_temp_db -p 5432:5432 --env-file ./.env.example postgres:13
+	docker run -d --rm --name hyperjob_temp_db -p 5432:5432 --env-file ./.env.example postgres:13-alpine
 	@bash -c "trap 'echo && echo Stopping db container... && docker stop hyperjob_temp_db' EXIT; \
 	echo Press CTRL+C to stop && sleep 1d"
 
