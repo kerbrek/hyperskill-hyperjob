@@ -13,6 +13,10 @@ shell:
 test:
 	pipenv run pytest
 
+.PHONY: coverage # Run tests with coverage report
+coverage:
+	pipenv run pytest --cov-report term-missing:skip-covered --cov=hyperjob --cov=resume --cov=vacancy
+
 .PHONY: lint # Run linter
 lint:
 	pipenv run pylint -d duplicate-code hyperjob/ resume/ vacancy/
