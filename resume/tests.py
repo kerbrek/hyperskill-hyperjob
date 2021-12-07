@@ -10,7 +10,7 @@ logging.disable(logging.CRITICAL)
 ADMIN_NAME = 'admin'
 ADMIN_PASS = 'password'
 REGULAR_USER_NAME = 'user'
-REGULAR_USER_PASS = 'example'
+REGULAR_USER_PASS = 'secret'
 RESUME_DESCRIPTION = 'Python Developer'
 RESUME_DESCRIPTION_MAX_LENGTH = Resume._meta.get_field(
     'description').max_length
@@ -57,7 +57,7 @@ class ResumeViewsTests(TestCase):
         self.assertNotContains(
             response, f'{self.regular_user.username}: {invalid_description}')
 
-    def test_regular_user_submit_resume(self):
+    def test_regular_user_submit_valid_resume(self):
         self.client.force_login(self.regular_user)
         response = self.client.post(
             '/resume/new', {'description': RESUME_DESCRIPTION})
