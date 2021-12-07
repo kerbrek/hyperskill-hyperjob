@@ -4,32 +4,32 @@ Implementation of the [HyperJob Agency project](https://hyperskill.org/projects/
 
 ## Branches
 
-* [azure-app-service](https://github.com/kerbrek/hyperskill-hyperjob/tree/azure-app-service) - project configured for deployment to Azure App Service (available at https://www.hyperjob.ml/)
-* [compose](https://github.com/kerbrek/hyperskill-hyperjob/tree/compose) - project configured as a containerized Compose application
+- [azure-app-service](https://github.com/kerbrek/hyperskill-hyperjob/tree/azure-app-service) - project configured for deployment to Azure App Service
+- [compose](https://github.com/kerbrek/hyperskill-hyperjob/tree/compose) - project configured as a containerized Compose application
 
 ## Prerequisites
 
-* pipenv
-* make
+- pipenv
+- make
 
 ## Commands
 
-* Setup a working environment using _Pipenv_
+- Setup a working environment using _Pipenv_
 
-    `make setup`
+  `make setup`
 
-* Start a development Web server
+- Start a development Web server
 
-    `make start`
+  `make start`
 
-* Run tests
+- Run tests
 
-    `make test`
+  `make test`
 
-* Run linter
+- Run linter
 
-    `make lint`
+  `make lint`
 
-* List all available _Make_ commands
+- List all available _Make_ commands
 
-    `make help`
+  `make help`
