@@ -1,30 +1,30 @@
 # HyperJob Agency
 
-Implementation of the [HyperJob Agency project](https://hyperskill.org/projects/94) (Django) from [JetBrains Academy](https://www.jetbrains.com/academy/) configured for deployment to Azure App Service (available at https://www.hyperjob.ml/).
+Implementation of the [HyperJob Agency project](https://hyperskill.org/projects/94) (Django) from [JetBrains Academy](https://www.jetbrains.com/academy/) configured for deployment to Azure App Service.
 
 ## Prerequisites
 
-* pipenv
-* make
+- pipenv
+- make
 
 ## Commands
 
-* Setup a working environment using _Pipenv_
+- Setup a working environment using _Pipenv_
 
-    `make setup`
+  `make setup`
 
-* Start a development Web server
+- Start a development Web server
 
-    `make start`
+  `make start`
 
-* Run tests
+- Run tests
 
-    `make test`
+  `make test`
 
-* Run linter
+- Run linter
 
-    `make lint`
+  `make lint`
 
-* List all available _Make_ commands
+- List all available _Make_ commands
 
-    `make help`
+  `make help`
