@@ -2,7 +2,8 @@
 import logging
 
 import pytest
-from pytest_django.asserts import assertContains, assertNotContains, assertRedirects
+from pytest_django.asserts import (assertContains, assertNotContains,
+                                   assertRedirects)
 
 from .models import Vacancy
 
@@ -11,7 +12,7 @@ logging.disable(logging.CRITICAL)
 ADMIN_NAME = 'admin'
 ADMIN_PASS = 'password'
 REGULAR_USER_NAME = 'user'
-REGULAR_USER_PASS = 'example'
+REGULAR_USER_PASS = 'secret'
 VACANCY_DESCRIPTION = 'Python Developer'
 VACANCY_DESCRIPTION_MAX_LENGTH = Vacancy._meta.get_field(
     'description').max_length
@@ -64,7 +65,7 @@ class TestVacancyViews:
         response = client.get('/vacancies/')
         assertNotContains(response, f'{admin.username}: {invalid_description}')
 
-    def test_admin_submit_vacancy(self, client, admin):
+    def test_admin_submit_valid_vacancy(self, client, admin):
         client.force_login(admin)
         response = client.post(
             '/vacancy/new', {'description': VACANCY_DESCRIPTION})
