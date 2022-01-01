@@ -1,7 +1,23 @@
-# For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.6-slim-buster
+#################################################################
+####################### BUILD STAGE #############################
+#################################################################
+FROM python:3.6-slim-buster as builder
 
-EXPOSE 8000
+RUN python -m pip install --no-cache-dir pipfile-requirements==0.3.0
+
+WORKDIR /app
+
+RUN python -m venv /app/venv
+ENV PATH="/app/venv/bin:$PATH"
+
+COPY Pipfile.lock .
+RUN pipfile2req > requirments.txt \
+    && pip install --no-cache-dir -r requirments.txt
+
+#################################################################
+####################### TARGET STAGE ############################
+#################################################################
+FROM python:3.6-slim-buster
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -9,21 +25,21 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+RUN groupadd --system --gid 999 app \
+    && useradd --system --uid 999 --gid app app \
+    \
+    && mkdir -p /app/static \
+    && chown --recursive app:app /app
+USER app
+
 WORKDIR /app
-RUN mkdir -p /app/static
 
-# Install pip requirements
-COPY Pipfile.lock .
-RUN python -m pip install --no-cache-dir pipfile-requirements && \
-    pipfile2req > requirments.txt && \
-    python -m pip install --no-cache-dir -r requirments.txt
+COPY --chown=app:app --from=builder /app/venv /app/venv
+COPY --chown=app:app . /app
 
-COPY . /app
+ENV PATH="/app/venv/bin:$PATH"
 
-# Creates a non-root user with an explicit UID and adds permission to access the /app folder
-# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-USER appuser
+EXPOSE 8000
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 

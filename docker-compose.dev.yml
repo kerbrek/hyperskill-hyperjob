@@ -7,7 +7,7 @@ services:
     image: hyperjob-web-dev
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app:ro
+      - .:/app/mount:ro
     env_file:
       - ./.env.example
     environment:
