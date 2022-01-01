@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := help
 
+project := hyperjob
+
 .PHONY: setup # Setup a working environment
 setup:
 	env PIPENV_VENV_IN_PROJECT=1 pipenv install --dev
@@ -7,7 +9,7 @@ setup:
 
 .PHONY: shell # Spawn a shell within the virtual environment
 shell:
-	pipenv shell
+	env PIPENV_DOTENV_LOCATION=.env.example pipenv shell
 
 .PHONY: test # Run tests
 test:
@@ -49,15 +51,18 @@ django-shell:
 requirements:
 	pipenv lock --requirements > requirements.txt
 
-.PHONY: db # Start Postgres container
-db:
+.PHONY: prepare-temp-containers
+prepare-temp-containers:
 	@echo Starting db container...
-	docker run -d --rm --name hyperjob_temp_db -p 5432:5432 --env-file ./.env.example postgres:13-alpine
+	@docker run -d --rm --name ${project}_temp_db --env-file ./.env.example -p 5432:5432 postgres:13-alpine
+
+.PHONY: db # Start Postgres container
+db: prepare-temp-containers
 	@bash -c "trap \
 	            'echo && echo Stopping db container...; \
-	            docker stop hyperjob_temp_db' \
+	            docker stop ${project}_temp_db' \
 	          EXIT; \
-	          echo Press CTRL+C to stop; \
+	          echo Press CTRL+C to stop && \
 	          sleep 1d"
 
 .PHONY: up # Start Compose services
