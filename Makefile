@@ -1,5 +1,7 @@
 .DEFAULT_GOAL := help
 
+SHELL := /usr/bin/env bash
+
 project := hyperjob
 
 .PHONY: setup # Setup a working environment
@@ -56,18 +58,21 @@ prepare-temp-containers:
 	@echo Starting db container...
 	@docker run -d --rm --name ${project}_temp_db --env-file ./.env.example -p 5432:5432 postgres:13-alpine
 
+stop-prepared-temp-containers := echo; \
+	echo Stopping db container...; \
+	docker stop ${project}_temp_db
+
 .PHONY: db # Start Postgres container
 db: prepare-temp-containers
-	@bash -c "trap \
-	            'echo && echo Stopping db container...; \
-	            docker stop ${project}_temp_db' \
-	          EXIT; \
-	          echo Press CTRL+C to stop && \
-	          sleep 1d"
+	@trap '${stop-prepared-temp-containers}' EXIT && \
+		echo Press CTRL+C to stop && \
+		sleep 1d
 
 .PHONY: up # Start Compose services
 up:
-	docker-compose up --build
+	docker-compose pull db nginx
+	docker-compose build --pull
+	docker-compose up
 
 .PHONY: down # Stop Compose services
 down:
@@ -75,7 +80,9 @@ down:
 
 .PHONY: up-dev # Start Compose services (development)
 up-dev:
-	docker-compose -f docker-compose.dev.yml up --build
+	docker-compose -f docker-compose.dev.yml pull db
+	docker-compose -f docker-compose.dev.yml build --pull
+	docker-compose -f docker-compose.dev.yml up
 
 .PHONY: down-dev # Stop Compose services (development)
 down-dev:
@@ -83,18 +90,19 @@ down-dev:
 
 .PHONY: up-debug # Start Compose services (debug)
 up-debug:
-	docker-compose -f docker-compose.debug.yml up --build
+	docker-compose -f docker-compose.debug.yml pull db
+	docker-compose -f docker-compose.debug.yml build --pull
+	docker-compose -f docker-compose.debug.yml up
 
 .PHONY: down-debug # Stop Compose services (debug)
 down-debug:
 	docker-compose -f docker-compose.debug.yml down
 
-## https://stackoverflow.com/a/45843594/6475258
 .PHONY: help # Print list of targets with descriptions
 help:
-	@grep '^.PHONY: .* #' $(lastword $(MAKEFILE_LIST)) | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20
-
-## https://stackoverflow.com/a/26339924/6475258
-# .PHONY: list # Print list of targets
-# list:
-# 	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
+	@echo; \
+		for mk in $(MAKEFILE_LIST); do \
+			echo \# $$mk; \
+			grep '^.PHONY: .* #' $$mk | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20; \
+			echo; \
+		done
