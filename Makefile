@@ -56,7 +56,13 @@ requirements:
 .PHONY: prepare-temp-containers
 prepare-temp-containers:
 	@echo Starting db container...
-	@docker run -d --rm --name ${project}_temp_db --env-file ./.env.example -p 5432:5432 postgres:13-alpine
+	@docker run -d \
+		--rm \
+		--name ${project}_temp_db \
+		--tmpfs /var/lib/postgresql/data \
+		--env-file ./.env.example \
+		-p 5432:5432 \
+		postgres:13-alpine
 
 stop-prepared-temp-containers := echo; \
 	echo Stopping db container...; \
@@ -103,6 +109,8 @@ help:
 	@echo; \
 		for mk in $(MAKEFILE_LIST); do \
 			echo \# $$mk; \
-			grep '^.PHONY: .* #' $$mk | sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' | expand -t20; \
+			grep '^.PHONY: .* #' $$mk \
+			| sed 's/\.PHONY: \(.*\) # \(.*\)/\1	\2/' \
+			| expand -t20; \
 			echo; \
 		done
