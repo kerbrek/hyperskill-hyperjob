@@ -26,9 +26,6 @@ services:
     volumes:
       - ./etc/nginx/templates:/etc/nginx/templates:ro
       - static_files:/app/static/:ro
-    env_file:
-      # - ./ENV/.env.nginx
-      - ./.env.example
     ports:
       - "8000:80"
     depends_on:
