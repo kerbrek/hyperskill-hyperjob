@@ -1,7 +1,7 @@
 #################################################################
 ####################### BUILD STAGE #############################
 #################################################################
-FROM python:3.6-slim-buster as builder
+FROM python:3.8-slim-bullseye as builder
 
 RUN python -m pip install --no-cache-dir pipfile-requirements==0.3.0
 
@@ -18,7 +18,7 @@ RUN pipfile2req /tmp/Pipfile.lock > /tmp/requirments.txt \
 #################################################################
 ####################### TARGET STAGE ############################
 #################################################################
-FROM python:3.6-slim-buster
+FROM python:3.8-slim-bullseye
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
